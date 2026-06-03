@@ -99,10 +99,12 @@ For early inspiration images:
 
 For final plan effect images:
 
-- Generate images only after the final plan is confirmed.
+- Generate images after the final plan is confirmed. This is required for final delivery unless image generation tools are unavailable.
 - Follow confirmed budget, retained items, immutable constraints, and final configuration.
 - Do not show prompts unless the user explicitly asks.
 - Add a short note explaining which final plan elements each image reflects.
+- Save the final image locally and reference it from the final Markdown handbook with a relative path.
+- If image generation is unavailable, still save the Markdown handbook and explicitly note that the final effect image was not generated.
 
 ## Style Handling
 
@@ -159,7 +161,14 @@ Do not force the user to choose only one plan. Allow mixing:
 - Retained existing equipment.
 - Compressed budget or deferred purchases.
 
-The final output should be a combined plan that explains which modules were adopted and why.
+After the user confirms the final combined plan, do not stop at a chat summary. Produce the final delivery package:
+
+- Generate a final desk setup effect image.
+- Save the final Markdown handbook locally.
+- Include the final image path in the Markdown handbook.
+- If the user does not specify an output path, use `desk-setup-planner-output/桌搭规划手册.md`.
+- If the user does not specify an image path, use `desk-setup-planner-output/images/最终桌搭效果图.png`.
+- If image generation fails or no image tool is available, save the handbook anyway and add a short note under `参考图说明`.
 
 ## Purchasing List Rules
 
@@ -248,7 +257,16 @@ Diagnosis output must include:
 
 ## Final Markdown Handbook
 
-The final deliverable is a Markdown handbook. Do not generate CSV or XLSX files by default.
+The final deliverable is a locally saved Markdown handbook. Do not generate CSV or XLSX files by default.
+
+When the user has confirmed the final plan:
+
+- Save the handbook to a local `.md` file instead of only printing it in chat.
+- Default path: `desk-setup-planner-output/桌搭规划手册.md`.
+- Create parent directories if they do not exist.
+- Save the final effect image under `desk-setup-planner-output/images/` by default.
+- Reference the image from the handbook with a relative Markdown image path, such as `![最终桌搭效果图](images/最终桌搭效果图.png)`.
+- Tell the user the saved Markdown path and image path after writing them.
 
 Use this structure:
 
@@ -328,6 +346,7 @@ Use this structure:
 ### 每阶段触发条件
 
 ## 12. 参考图说明
+![最终桌搭效果图](images/最终桌搭效果图.png)
 ```
 
 ## Boundaries
